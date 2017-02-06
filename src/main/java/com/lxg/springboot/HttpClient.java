@@ -5,11 +5,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.Resource;
-
 
 /**
  * Created by admin on 2017/2/6.
@@ -17,13 +15,29 @@ import javax.annotation.Resource;
 @Configuration
 public class HttpClient {
 
+    @Value("${http.maxTotal}")
+    private Integer maxTotal;
 
+    @Value("${http.defaultMaxPerRoute}")
+    private Integer defaultMaxPerRoute;
+
+    @Value("${http.connectTimeout}")
+    private Integer connectTimeout;
+
+    @Value("${http.connectionRequestTimeout}")
+    private Integer connectionRequestTimeout;
+
+    @Value("${http.socketTimeout}")
+    private Integer socketTimeout;
+
+    @Value("${http.staleConnectionCheckEnabled}")
+    private boolean staleConnectionCheckEnabled;
 
     @Bean(name = "httpClientConnectionManager")
     public PoolingHttpClientConnectionManager demo(){
         PoolingHttpClientConnectionManager httpClientConnectionManager = new PoolingHttpClientConnectionManager();
-        httpClientConnectionManager.setMaxTotal(100);
-        httpClientConnectionManager.setDefaultMaxPerRoute(20);
+        httpClientConnectionManager.setMaxTotal(maxTotal);
+        httpClientConnectionManager.setDefaultMaxPerRoute(defaultMaxPerRoute);
         return httpClientConnectionManager;
     }
 
@@ -46,7 +60,10 @@ public class HttpClient {
     @Bean(name = "builder")
     public RequestConfig.Builder demo4(){
         RequestConfig.Builder builder = RequestConfig.custom();
-        return builder.setConnectTimeout(1000).setSocketTimeout(10000).setStaleConnectionCheckEnabled(true);
+        return builder.setConnectTimeout(connectTimeout)
+                .setConnectionRequestTimeout(connectionRequestTimeout)
+                .setSocketTimeout(socketTimeout)
+                .setStaleConnectionCheckEnabled(staleConnectionCheckEnabled);
     }
 
     @Bean
