@@ -34,7 +34,7 @@ public class HttpClient {
     private boolean staleConnectionCheckEnabled;
 
     @Bean(name = "httpClientConnectionManager")
-    public PoolingHttpClientConnectionManager demo(){
+    public PoolingHttpClientConnectionManager getHttpClientConnectionManager(){
         PoolingHttpClientConnectionManager httpClientConnectionManager = new PoolingHttpClientConnectionManager();
         httpClientConnectionManager.setMaxTotal(maxTotal);
         httpClientConnectionManager.setDefaultMaxPerRoute(defaultMaxPerRoute);
@@ -42,7 +42,7 @@ public class HttpClient {
     }
 
     @Bean(name = "httpClientBuilder")
-    public HttpClientBuilder demo2(@Qualifier("httpClientConnectionManager")PoolingHttpClientConnectionManager httpClientConnectionManager){
+    public HttpClientBuilder getHttpClientBuilder(@Qualifier("httpClientConnectionManager")PoolingHttpClientConnectionManager httpClientConnectionManager){
 
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
@@ -52,13 +52,13 @@ public class HttpClient {
     }
 
     @Bean
-    public CloseableHttpClient demo3(@Qualifier("httpClientBuilder") HttpClientBuilder httpClientBuilder){
+    public CloseableHttpClient getCloseableHttpClient(@Qualifier("httpClientBuilder") HttpClientBuilder httpClientBuilder){
         return httpClientBuilder.build();
     }
 
 
     @Bean(name = "builder")
-    public RequestConfig.Builder demo4(){
+    public RequestConfig.Builder getBuilder(){
         RequestConfig.Builder builder = RequestConfig.custom();
         return builder.setConnectTimeout(connectTimeout)
                 .setConnectionRequestTimeout(connectionRequestTimeout)
@@ -67,7 +67,7 @@ public class HttpClient {
     }
 
     @Bean
-    public RequestConfig demo5(@Qualifier("builder") RequestConfig.Builder builder){
+    public RequestConfig getRequestConfig(@Qualifier("builder") RequestConfig.Builder builder){
         return builder.build();
     }
 
