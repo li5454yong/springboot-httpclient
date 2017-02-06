@@ -27,6 +27,7 @@ public class HttpAPIService {
     @Autowired
     private RequestConfig config;
 
+
     /**
      * 不带参数的get请求，如果状态码为200，则返回body，如果不为200，则返回null
      * 
