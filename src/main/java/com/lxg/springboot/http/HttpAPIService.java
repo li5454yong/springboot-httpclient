@@ -96,7 +96,7 @@ public class HttpAPIService {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 list.add(new BasicNameValuePair(entry.getKey(), entry.getValue().toString()));
             }
-            // 构造佛from表单对象
+            // 构造from表单对象
             UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(list, "UTF-8");
 
             // 把表单放到post里

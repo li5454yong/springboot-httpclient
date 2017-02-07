@@ -1,7 +1,5 @@
 package com.lxg.springboot.http;
 
-import java.util.Date;
-
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
